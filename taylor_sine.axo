@@ -1,0 +1,45 @@
+<objdefs appVersion="1.0.10">
+   <obj.normal id="taylor_sine" uuid="50001ff03753539d9028888689654235fa199936">
+      <sDescription>Taylor sine 440Hz</sDescription>
+      <author>JLS</author>
+      <license>BSD</license>
+      <helpPatch>taylor_sine.axh</helpPatch>
+      <inlets/>
+      <outlets>
+         <frac32buffer.bipolar name="wave" description="sine wave"/>
+      </outlets>
+      <displays/>
+      <params/>
+      <attribs/>
+      <code.declaration><![CDATA[float cnt;
+float a2;
+float x;
+float rv;]]></code.declaration>
+      <code.init><![CDATA[cnt = -3.1415;]]></code.init>
+      <code.srate><![CDATA[a2 = cnt * cnt;
+x = cnt;
+
+rv = x;
+
+x = x * (1.0 / 6) * a2;
+rv -= x;
+
+x = x * (1.0 / 20) * a2;
+rv += x;
+
+x = x * (1.0 / 42) * a2;
+rv -= x;
+
+x = x * (1.0 / 72) * a2;
+rv += x;
+
+x = x * (1.0 / 110) * a2;
+rv -= x;
+
+if (cnt > 3.1415) cnt = -3.1415;
+
+cnt = cnt + 0.058;
+
+outlet_wave = (int32_t) (rv * (1<<27));]]></code.srate>
+   </obj.normal>
+</objdefs>

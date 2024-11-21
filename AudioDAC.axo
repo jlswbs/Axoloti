@@ -1,0 +1,21 @@
+<objdefs appVersion="1.0.12">
+   <obj.normal id="AudioDAC" uuid="56e465e9-fc3e-4068-8eb9-dbf9c320aa61">
+      <license>GPL</license>
+      <inlets>
+         <frac32buffer name="PA4"/>
+         <frac32buffer name="PA5"/>
+      </inlets>
+      <outlets/>
+      <displays/>
+      <params/>
+      <attribs/>
+      <code.init><![CDATA[palSetPadMode(GPIOA, 4, PAL_MODE_INPUT_ANALOG);
+palSetPadMode(GPIOA, 5, PAL_MODE_INPUT_ANALOG);
+RCC->APB1ENR |= 0x39999999;
+DAC->CR |= 0x00030003;]]></code.init>
+      <code.dispose><![CDATA[DAC->CR = 0x0;
+RCC->APB1ENR &= ~0x39999999;]]></code.dispose>
+      <code.srate><![CDATA[DAC->DHR12R1 = 2048 + (inlet_PA4>>16);
+DAC->DHR12R2 = 2048 + (inlet_PA5>>16);]]></code.srate>
+   </obj.normal>
+</objdefs>
