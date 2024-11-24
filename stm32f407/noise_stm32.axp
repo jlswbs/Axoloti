@@ -1,0 +1,199 @@
+<patch-1.0 appVersion="1.0.12">
+   <obj type="mix/mix 1" uuid="e8f482af5b1ec4a2e9cf8ac7ce09e7c0e43cea08" name="mix_2" x="350" y="70">
+      <params>
+         <frac32.u.map name="gain1" value="20.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="lfo/square" uuid="de6909eb64db13af5b43f979a4c130024b3a4793" name="square_1" x="84" y="84">
+      <params>
+         <frac32.s.map name="pitch" value="-14.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="logic/counter" uuid="7a141ba82230e54e5f5cd12da5dbe5a74ba854a5" name="counter_2" x="210" y="84">
+      <params>
+         <int32 name="maximum" value="5"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="lfo/sine" uuid="75f7330c26a13953215dccc3b7b9008545c9daa9" name="sine_1" x="476" y="84">
+      <params>
+         <frac32.s.map name="pitch" value="-41.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="mix/mix 1" uuid="e8f482af5b1ec4a2e9cf8ac7ce09e7c0e43cea08" name="mix_3" x="616" y="84">
+      <params>
+         <frac32.u.map name="gain1" value="36.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="jls/seq/peuclid_seq" uuid="53d67376-ae6e-4626-bb0c-8ef70e878849" name="peuclid_seq_1" x="210" y="168">
+      <params/>
+      <attribs>
+         <spinner attributeName="steps" value="22"/>
+         <spinner attributeName="hits" value="28"/>
+      </attribs>
+   </obj>
+   <obj type="jt/fx/bode" uuid="fdc0d547-dde9-4d88-8737-95a1d91a8ab8" name="obj_1" x="350" y="196">
+      <params>
+         <frac32.s.map name="pitch" value="-24.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="const/i" uuid="e202f44b2df17ae0b3e663b98ea6b14c8ff00408" name="i_1" x="84" y="210">
+      <params/>
+      <attribs>
+         <spinner attributeName="value" value="1"/>
+      </attribs>
+   </obj>
+   <obj type="spat/pan m" uuid="f6c6c0d7224841d9d76962e64d7f779d8194b7f9" name="pan_1" x="490" y="210">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="stomps/reverb1" uuid="93e6b22a-a585-4d56-b7d8-79dffde0e466" name="obj_2" x="602" y="224">
+      <params>
+         <bool32.tgl name="on" value="1"/>
+         <frac32.u.map name="*c_1" value="13.5"/>
+         <frac32.u.map name="decay" value="25.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="sss/noise/noiseOsc" uuid="07d7e1f3-dfeb-4f50-8131-562eb291e1aa" name="noiseOsc_1" x="70" y="294">
+      <params>
+         <frac32.s.map name="pitch" value="8.0"/>
+         <int32 name="tone" value="28"/>
+         <frac32.s.map name="cut" value="-32.0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="delay/echo fdbk" uuid="1f4503fa4cd020010f59ce3ffa860caf0cd850c5" name="echo_1" x="448" y="308">
+      <params/>
+      <attribs>
+         <spinner attributeName="delaylength" value="10000"/>
+      </attribs>
+   </obj>
+   <obj type="disp/scope 128 b trig" uuid="11747dcd1dc9afe4919f537c861fb18b80b4e4e" name="scope_1" x="210" y="336">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="jls/osc/chaotic_osc" uuid="e0b573e8-3b1c-4390-a686-c06fe49126b5" name="chaotic_osc_1" x="378" y="392">
+      <params>
+         <frac32.u.map name="freq" value="42.0"/>
+         <frac32.s.map name="s" value="-27.0"/>
+         <frac32.s.map name="r" value="-29.0"/>
+         <bool32.mom name="err" value="0"/>
+      </params>
+      <attribs/>
+   </obj>
+   <obj type="audio/out stereo" uuid="a1ca7a567f535acc21055669829101d3ee7f0189" name="out_1" x="616" y="392">
+      <params/>
+      <attribs/>
+   </obj>
+   <obj type="mix/mix 2" uuid="30c04239c88e09d3fa5c333b784ecf54f1b0e268" name="mix_1" x="98" y="462">
+      <params>
+         <frac32.u.map name="gain1" value="7.5"/>
+         <frac32.u.map name="gain2" value="12.5"/>
+      </params>
+      <attribs/>
+   </obj>
+   <nets>
+      <net>
+         <source obj="obj_1" outlet="down"/>
+         <dest obj="scope_1" inlet="in"/>
+         <dest obj="echo_1" inlet="in"/>
+         <dest obj="pan_1" inlet="i1"/>
+      </net>
+      <net>
+         <source obj="square_1" outlet="wave"/>
+         <dest obj="peuclid_seq_1" inlet="trig"/>
+         <dest obj="counter_2" inlet="trig"/>
+      </net>
+      <net>
+         <source obj="i_1" outlet="out"/>
+         <dest obj="peuclid_seq_1" inlet="active"/>
+      </net>
+      <net>
+         <source obj="peuclid_seq_1" outlet="wave"/>
+         <dest obj="obj_1" inlet="pitchm"/>
+         <dest obj="echo_1" inlet="feedback"/>
+         <dest obj="noiseOsc_1" inlet="pitch"/>
+         <dest obj="sine_1" inlet="pitch"/>
+         <dest obj="chaotic_osc_1" inlet="pitch"/>
+      </net>
+      <net>
+         <source obj="peuclid_seq_1" outlet="gate"/>
+         <dest obj="scope_1" inlet="hold"/>
+         <dest obj="chaotic_osc_1" inlet="active"/>
+      </net>
+      <net>
+         <source obj="mix_1" outlet="out"/>
+         <dest obj="obj_1" inlet="in"/>
+      </net>
+      <net>
+         <source obj="echo_1" outlet="out"/>
+         <dest obj="mix_1" inlet="in2"/>
+      </net>
+      <net>
+         <source obj="noiseOsc_1" outlet="wave"/>
+         <dest obj="mix_1" inlet="in1"/>
+      </net>
+      <net>
+         <source obj="sine_1" outlet="wave"/>
+         <dest obj="pan_1" inlet="c"/>
+      </net>
+      <net>
+         <source obj="counter_2" outlet="c"/>
+         <dest obj="chaotic_osc_1" inlet="reset"/>
+      </net>
+      <net>
+         <source obj="chaotic_osc_1" outlet="x"/>
+         <dest obj="mix_2" inlet="in1"/>
+      </net>
+      <net>
+         <source obj="mix_2" outlet="out"/>
+         <dest obj="mix_1" inlet="bus_in"/>
+      </net>
+      <net>
+         <source obj="chaotic_osc_1" outlet="y"/>
+         <dest obj="noiseOsc_1" inlet="cut"/>
+         <dest obj="square_1" inlet="pitch"/>
+         <dest obj="mix_3" inlet="bus_in"/>
+      </net>
+      <net>
+         <source obj="obj_1" outlet="up"/>
+         <dest obj="mix_3" inlet="in1"/>
+      </net>
+      <net>
+         <source obj="mix_3" outlet="out"/>
+         <dest obj="mix_2" inlet="bus_in"/>
+      </net>
+      <net>
+         <source obj="pan_1" outlet="left"/>
+         <dest obj="obj_2" inlet="inL"/>
+      </net>
+      <net>
+         <source obj="pan_1" outlet="right"/>
+         <dest obj="obj_2" inlet="inR"/>
+      </net>
+      <net>
+         <source obj="obj_2" outlet="outL"/>
+         <dest obj="out_1" inlet="left"/>
+      </net>
+      <net>
+         <source obj="obj_2" outlet="outR"/>
+         <dest obj="out_1" inlet="right"/>
+      </net>
+   </nets>
+   <settings>
+      <subpatchmode>no</subpatchmode>
+   </settings>
+   <notes><![CDATA[]]></notes>
+   <windowPos>
+      <x>464</x>
+      <y>38</y>
+      <width>808</width>
+      <height>766</height>
+   </windowPos>
+</patch-1.0>
